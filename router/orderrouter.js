@@ -2,21 +2,21 @@ const express = require('express');
 const router = express.Router();
 const {
     placeOrder,
-    handlePaymentSuccess,
-    placeCODOrder,
-    getUserOrders,
+    getOrders,
+    getOrderById,
+    updateOrderStatus,
+    totalorder
 } = require('../control/orderCtrl');
 
-// Place a new order (Razorpay or COD)
-router.post('/placeorder', placeOrder);
+router.post('/orders', placeOrder);
 
-// Handle Razorpay payment success
-router.post('/paymentsuccess', handlePaymentSuccess);
+router.get('/getorders/:userId', getOrders);
 
-// Place a COD order
-router.post('/cod', placeCODOrder);
+router.get('/getorder/:orderId', getOrderById);
 
-// Get orders for a specific user
-router.get('/getorders/:userId', getUserOrders);
+router.put('/updateorderstatus/:orderId', updateOrderStatus);
+
+router.get('/totalorder', totalorder);
 
 module.exports = router;
+

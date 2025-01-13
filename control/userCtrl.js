@@ -2,9 +2,6 @@ const usermodel = require('../model/usermodel');
 const bcrypt = require('bcrypt');
 const { createToken } = require('../middleware/token');
 
-
-
-
 const totalUser=async (req, res) => {
     try {
       const totalUsers = await usermodel.countDocuments();
@@ -18,22 +15,18 @@ const register = async (req, res) => {
     try {
         const { fullname, phone, email, password } = req.body;
 
-        // Check if all required fields are present
         if (!fullname || !phone || !email || !password) {
             return res.status(400).json({ status: 0, msg: 'All fields are required' });
         }
 
-        // Check if the email already exists
         const existingUser = await usermodel.findOne({ email: email });
         if (existingUser) {
             return res.status(400).json({ status: 0, msg: 'Email already exists' });
         }
 
-        // Hash the password
-        const salt = await bcrypt.genSalt(10); // Ensure salt is defined
+        const salt = await bcrypt.genSalt(10); 
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Create the new user
         const newUser = new usermodel({
             fullname,
             phone,
@@ -41,7 +34,6 @@ const register = async (req, res) => {
             password: hashedPassword,
         });
 
-        // Save the new user to the database
         await newUser.save();
 
         return res.status(201).json({ status: 1, msg: 'Registered successfully', userId: newUser._id });
@@ -53,7 +45,6 @@ const register = async (req, res) => {
 
 
 
-// Login endpoint
 const login = async (req, res) => {
     const { email, password } = req.body;
 

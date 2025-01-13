@@ -109,14 +109,6 @@ const deleteproducts = async (req, res) => {
 };
 
 
-// const updateproducts=async(req,res)=>{
-//   const id=req.headers.idno;
-//   const {title,description,category,price,rating,stock}=req.body 
-//   await productmodel.updateOne({_id:id},{title,description,category,price,rating,stock})
-//   res.json({status:1,msg:"Data Updated"})
-// }
-
-
 const findByid = async (req, res) => {
   const { id } = req.params;
   
